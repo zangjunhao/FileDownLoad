@@ -58,7 +58,7 @@ public class DownloadService extends Service {
         public void onCanceled() {
             downloadTask = null;
             stopForeground(true);
-            Toast.makeText(DownloadService.this, "取消", Toast.LENGTH_SHORT).show();
+            Toast.makeText(DownloadService.this, "取消了", Toast.LENGTH_SHORT).show();
         }
 
     };

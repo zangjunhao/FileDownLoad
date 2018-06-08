@@ -1,8 +1,13 @@
 package com.example.filedownload;
 
 import android.Manifest;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
+import android.os.Environment;
+import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -10,9 +15,25 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import java.io.File;
+
 import ch.halcyon.squareprogressbar.SquareProgressBar;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+    private DownloadService.DownloadBinder downloadBinder;
+
+    private ServiceConnection connection = new ServiceConnection() {
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+        }
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            downloadBinder = (DownloadService.DownloadBinder) service;
+        }
+
+    };
     public int isLoad=0;
     String[] ImageUrl= {
         "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528023919417&di=6653f6f735682b3e49666d044265d63f&imgtype=0&src=http%3A%2F%2Fnewsimg.5054399.com%2Fuploads%2Fuserup%2F1805%2F1Q54F441W.jpg",
@@ -43,6 +64,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         squareProgressBar4.setOnClickListener(this);
         squareProgressBar5.setOnClickListener(this);
         squareProgressBar6.setOnClickListener(this);
+        Intent intent = new Intent(this, DownloadService.class);
+        startService(intent); // 启动服务
+        bindService(intent, connection, BIND_AUTO_CREATE); // 绑定服务
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{ Manifest.permission. WRITE_EXTERNAL_STORAGE }, 1);
         }
@@ -64,57 +88,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.sprogressbar1:
                 SquareProgressBar squareProgressBar1 = findViewById(R.id.sprogressbar1);
-                if(isLoad==0) {
-                    isLoad++;
                     squareProgressBar1.showProgress(true);
+                    downloadBinder.getProgressUi(squareProgressBar1);
+                    downloadBinder.startDownload(ImageUrl[0]);
+
                     Toast.makeText(this, "开始下载第一个", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    Toast.makeText(this,"有图片正在下载了,等下再点击下载",Toast.LENGTH_SHORT).show();
-                }
+
                     break;
             case R.id.sprogressbar2:
                 SquareProgressBar squareProgressBar2 = findViewById(R.id.sprogressbar2);
-               if(isLoad==0) {
-                   isLoad++;
                    squareProgressBar2.showProgress(true);
-
+                downloadBinder.getProgressUi(squareProgressBar2);
+                   downloadBinder.startDownload(ImageUrl[1]);
                    Toast.makeText(this, "开始下载第二个", Toast.LENGTH_SHORT).show();
-               }
-               else{
-                   Toast.makeText(this,"有图片正在下载了,等下再点击下载",Toast.LENGTH_SHORT).show();
-               }
+
                break;
             case R.id.sprogressbar3:
                 SquareProgressBar squareProgressBar3 = findViewById(R.id.sprogressbar3);
-                if(isLoad==0) {
-                    isLoad++;
+
                     squareProgressBar3.showProgress(true);
+                downloadBinder.getProgressUi(squareProgressBar3);
+                    downloadBinder.startDownload(ImageUrl[2]);
                     Toast.makeText(this, "开始下载第三个", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    Toast.makeText(this,"有图片正在下载了,等下再点击下载",Toast.LENGTH_SHORT).show();
-                }break;
+                break;
             case R.id.sprogressbar4:
                 SquareProgressBar squareProgressBar4 = findViewById(R.id.sprogressbar4);
-                if(isLoad==0) {
-                    isLoad++;
                     squareProgressBar4.showProgress(true);
+                downloadBinder.getProgressUi(squareProgressBar4);
+                    downloadBinder.startDownload(ImageUrl[3]);
                     Toast.makeText(this, "开始下载第四个", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    Toast.makeText(this,"有图片正在下载了,等下再点击下载",Toast.LENGTH_SHORT).show();
-                }break;
+                break;
             case R.id.sprogressbar5:
                 SquareProgressBar squareProgressBar5 = findViewById(R.id.sprogressbar5);
-                if(isLoad==0) {
-                    isLoad++;
                     squareProgressBar5.showProgress(true);
+                downloadBinder.getProgressUi(squareProgressBar5);
+                    downloadBinder.startDownload(ImageUrl[4]);
                     Toast.makeText(this, "开始下载第五个", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    Toast.makeText(this,"有图片正在下载了,等下再点击下载",Toast.LENGTH_SHORT).show();
-                }break;
+                break;
             case R.id.sprogressbar6:
                 Toast.makeText(this, "萱姐姐天下第一", Toast.LENGTH_SHORT).show();
                 break;

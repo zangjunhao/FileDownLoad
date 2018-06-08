@@ -63,4 +63,41 @@
         android:layout_below="@id/sprogressbar4"
         android:layout_alignParentRight="true"
         />
+    <Button
+        android:id="@+id/redownload"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/redownload"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="50dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:text="删除"
+        android:textColor="#111111"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="60dp"
+        android:layout_marginBottom="35dp"
+       />
+    <Button
+        android:id="@+id/pruse"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/pruse"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="50dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:text="暂停"
+        android:textColor="#111111"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="63dp"
+        android:layout_marginBottom="30dp"
+        />
 </RelativeLayout>

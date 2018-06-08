@@ -13,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.File;
@@ -52,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         SquareProgressBar squareProgressBar4=findViewById(R.id.sprogressbar4);
         SquareProgressBar squareProgressBar5=findViewById(R.id.sprogressbar5);
         SquareProgressBar squareProgressBar6=findViewById(R.id.sprogressbar6);
+        Button redownload=(Button)findViewById(R.id.redownload);
+        Button pruse=(Button)findViewById(R.id.pruse);
         squareProgressBar1.setImage(R.drawable.one);
         squareProgressBar2.setImage(R.drawable.two);
         squareProgressBar3.setImage(R.drawable.three);
@@ -64,6 +67,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         squareProgressBar4.setOnClickListener(this);
         squareProgressBar5.setOnClickListener(this);
         squareProgressBar6.setOnClickListener(this);
+        redownload.setOnClickListener(this);
+        pruse.setOnClickListener(this);
         Intent intent = new Intent(this, DownloadService.class);
         startService(intent); // 启动服务
         bindService(intent, connection, BIND_AUTO_CREATE); // 绑定服务
@@ -127,6 +132,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.sprogressbar6:
                 Toast.makeText(this, "萱姐姐天下第一", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.redownload:
+                downloadBinder.cancelDownload();
+                break;
+            case R.id.pruse:
+                downloadBinder.pauseDownload();
                 break;
         }
     }

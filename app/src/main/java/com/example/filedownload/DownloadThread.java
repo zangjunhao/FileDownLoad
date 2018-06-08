@@ -54,9 +54,9 @@ public class DownloadThread extends Thread {
                 while ((len = is.read(b)) !=-1) {
                         total += len;
                         savedFile.write(b, 0, len);
-                        progressListener.setProgress(total/(end-star));
-                    System.out.println(total/(end-star));
+                        progressListener.setProgress(total/(end-star)*100);
                 }
+                //System.out.println( total/(end-star));
                 response.body().close();
                 is.close();
                 savedFile.close();
